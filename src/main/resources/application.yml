@@ -1,0 +1,9 @@
+server:
+  port: 50001
+  error:
+    whitelabel:
+      enabled: false
+
+
+jwt:
+  secretKey : D9A20C953DFA9A25AF71539A627DEDB5ED2997EAF1294C0F9A6351036EC9A351

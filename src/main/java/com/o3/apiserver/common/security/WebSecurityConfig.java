@@ -1,5 +1,6 @@
 package com.o3.apiserver.common.security;
 
+import com.o3.apiserver.common.security.jwt.JwtTokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,20 +9,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-    private static final String[] PERMIT_URL = {"/szs/login", "/szs/signup"};
+    private final CustomAuthenticationProvider customAuthenticationProvider;
+    private final AuthenticationExceptionHandler authenticationExceptionHandler;
+    private final JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
 
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider()
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(customAuthenticationProvider);
     }
 
     @Override
@@ -33,14 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
-                //.authenticationEntryPoint() // 인증 핸들러
+                .authenticationEntryPoint(authenticationExceptionHandler)
                 .and()
-//                .addFilterBefore()
-//                .exceptionHandling()
-        ;
-
-//                .antMatcher(PERMIT_URL)
-//                .se
+                .addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(authenticationExceptionHandler);
     }
 
     @Override

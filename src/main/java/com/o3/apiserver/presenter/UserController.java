@@ -3,7 +3,10 @@ package com.o3.apiserver.presenter;
 
 import com.o3.apiserver.application.user.LoginUserService;
 import com.o3.apiserver.application.user.SignUpUserService;
+import com.o3.apiserver.common.CommonResponse;
+import com.o3.apiserver.presenter.request.LoginUserRequest;
 import com.o3.apiserver.presenter.request.SignUpUserRequest;
+import com.o3.apiserver.presenter.response.LoginUserResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,14 +25,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public void signUp(@RequestBody SignUpUserRequest request) {
+    public CommonResponse signUp(@RequestBody SignUpUserRequest request) {
         signUpUserService.signUp(request.convertDto());
-
+        return CommonResponse.success("OK");
     }
 
     @PostMapping("/login")
-    public void login() {
-
-//        CommonResponse.success()
+    public CommonResponse<LoginUserResponse> login(@RequestBody LoginUserRequest request) {
+        String token = loginUserService.login(request.convertDto());
+        return CommonResponse.convert(new LoginUserResponse(token));
     }
 }

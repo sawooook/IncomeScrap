@@ -2,6 +2,7 @@ package com.o3.apiserver.domain.user;
 
 import com.o3.apiserver.application.user.dto.SignUpUserDto;
 import com.o3.apiserver.domain.scrap.Scrap;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
+@Getter
 public class User {
 
     @Id
