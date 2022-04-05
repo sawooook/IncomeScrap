@@ -1,8 +1,8 @@
-package com.o3.apiserver.application.user;
+package com.o3.apiserver.application.port;
 
 import com.o3.apiserver.domain.user.User;
 
-public interface UserInterface {
+public interface UserDrivenPort {
     User findByUserUniqueId(String userUniqueId);
 
     void isAlreadyRegister(String userUniqueId);

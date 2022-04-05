@@ -7,8 +7,7 @@ public enum PermitUserType {
     REGISTER_B("3", "김둘리", "860824-1655068"),
     REGISTER_C("4", "마징가", "860824-1655068"),
     REGISTER_D("5", "배지터", "860824-1655068"),
-    REGISTER_E("6", "손오공", "860824-1655068")
-    ;
+    REGISTER_E("6", "손오공", "860824-1655068");
 
 
     private final String userUniqueId;
