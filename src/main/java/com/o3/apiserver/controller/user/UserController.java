@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse<LoginUserResponse>> login(
+    public ResponseEntity<CommonResponse<MyInfoUserResponse>> login(
             @RequestBody LoginUserRequest request
     ) {
         String token = loginUserService.login(request.convertDto());
