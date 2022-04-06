@@ -1,4 +1,4 @@
-package com.o3.apiserver.application.user;
+package com.o3.apiserver.application.user.dto.enums;
 
 public enum PermitUserType {
 

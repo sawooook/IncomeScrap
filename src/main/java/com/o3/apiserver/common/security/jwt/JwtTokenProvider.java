@@ -1,7 +1,9 @@
 package com.o3.apiserver.common.security.jwt;
 
-import com.o3.apiserver.common.dto.LoginAuthUserDto;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

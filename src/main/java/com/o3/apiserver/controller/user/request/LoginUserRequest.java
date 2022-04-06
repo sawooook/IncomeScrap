@@ -1,4 +1,4 @@
-package com.o3.apiserver.presenter.request;
+package com.o3.apiserver.controller.user.request;
 
 import com.o3.apiserver.application.user.dto.LoginUserDto;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.o3.apiserver.infrastructure.user.provider;
+package com.o3.apiserver.infrastructure.user.adapter;
 
-import com.o3.apiserver.application.user.UserInterface;
+import com.o3.apiserver.application.user.port.UserDrivenPort;
 import com.o3.apiserver.domain.user.User;
 import com.o3.apiserver.infrastructure.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserProvider implements UserInterface {
+public class UserAdapter implements UserDrivenPort {
 
     private final UserJpaRepository userJpaRepository;
 

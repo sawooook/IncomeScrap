@@ -25,7 +25,7 @@ public class AuthenticationExceptionHandler implements AuthenticationEntryPoint 
             HttpServletResponse response,
             AuthenticationException authException
     ) throws IOException {
-        String json = objectMapper.writeValueAsString(CommonResponse.error(UNAUTHORIZED.getCode(), UNAUTHORIZED.getMessage()));
+        String json = objectMapper.writeValueAsString(CommonResponse.error(UNAUTHORIZED.getCode()));
         response.setHeader("Content-Type", "application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(json);

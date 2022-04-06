@@ -7,3 +7,6 @@ server:
 
 jwt:
   secretKey : D9A20C953DFA9A25AF71539A627DEDB5ED2997EAF1294C0F9A6351036EC9A351
+
+external:
+  thirdPartyUrl: https://codetest.3o3.co.kr

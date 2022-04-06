@@ -1,6 +1,6 @@
 package com.o3.apiserver.common.security;
 
-import com.o3.apiserver.application.user.UserInterface;
+import com.o3.apiserver.application.user.port.UserDrivenPort;
 import com.o3.apiserver.common.dto.LoginAuthUserDto;
 import com.o3.apiserver.domain.user.User;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
 
-    private final UserInterface userInterface;
+    private final UserDrivenPort userDrivenPort;
 
     @Override
     public UserDetails loadUserByUsername(String userUniqueId) throws UsernameNotFoundException {
-        User user = userInterface.findByUserUniqueId(userUniqueId);
+        User user = userDrivenPort.findByUserUniqueId(userUniqueId);
         return LoginAuthUserDto.create(user);
     }
 }

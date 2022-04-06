@@ -1,4 +1,4 @@
-package com.o3.apiserver.presenter.response;
+package com.o3.apiserver.controller.user.response;
 
 public class LoginUserResponse {
     private final String token;

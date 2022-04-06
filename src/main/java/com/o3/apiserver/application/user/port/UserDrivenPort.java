@@ -1,4 +1,4 @@
-package com.o3.apiserver.application.port;
+package com.o3.apiserver.application.user.port;
 
 import com.o3.apiserver.domain.user.User;
 
