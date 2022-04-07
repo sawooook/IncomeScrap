@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 @Getter
 public class User {
@@ -25,14 +25,14 @@ public class User {
     @Column(name = "password")
     private String password; // 비밀번호
 
+
     @Column(name = "name")
     private String name; // 이름
 
     @Column(name = "register_number")
     private String registerNumber; // 주민번호
 
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Scrap> scrapList = new ArrayList<>();
 
     public User(String userUniqueId, String password, String name, String registerNumber) {
@@ -42,7 +42,7 @@ public class User {
         this.registerNumber = registerNumber;
     }
 
-    public static User create(SignUpUserDto signUpUserDto) {
-        return new User(signUpUserDto.getUserUniqueId(), signUpUserDto.getPassword(), signUpUserDto.getName(), signUpUserDto.getRegNo());
+    public static User create(SignUpUserDto signUpUserDto, String encodePassword) {
+        return new User(signUpUserDto.getUserUniqueId(), encodePassword, signUpUserDto.getName(), signUpUserDto.getRegNo());
     }
 }

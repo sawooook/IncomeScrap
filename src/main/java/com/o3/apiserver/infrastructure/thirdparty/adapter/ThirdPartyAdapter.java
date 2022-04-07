@@ -30,10 +30,11 @@ public class ThirdPartyAdapter implements ThirdPartyDrivenPort {
 
     private Callback<ThirdPartyResponse> callback() {
         return new Callback<ThirdPartyResponse>() {
+
             @Override
             public void onResponse(Call<ThirdPartyResponse> call, Response<ThirdPartyResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    makeScrapService.make(response.body());
+                    makeScrapService.make(response.body().convertDto());
                 }
             }
 

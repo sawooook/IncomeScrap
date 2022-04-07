@@ -1,7 +1,6 @@
 package com.o3.apiserver.controller.user.request;
 
 import com.o3.apiserver.application.user.dto.SignUpUserDto;
-import lombok.Data;
 import lombok.Getter;
 
 
@@ -20,6 +19,6 @@ public class SignUpUserRequest {
     }
 
     public SignUpUserDto convertDto() {
-        return new SignUpUserDto(Long.parseLong(this.userId), this.password, this.name, this.regNo);
+        return new SignUpUserDto(userId, password, name, regNo);
     }
 }

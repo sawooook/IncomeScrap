@@ -1,11 +1,14 @@
 package com.o3.apiserver.domain.scrap;
 
 
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyTaxDetailResponse;
+import com.o3.apiserver.application.scrap.dto.GetScrapTaxDetailDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "scrap_tax_detail")
@@ -14,7 +17,7 @@ import javax.persistence.*;
 public class ScrapTaxDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "scrap_id")
     private Long scrapId;
 
     @Column(name = "total_use_amount")
@@ -25,7 +28,7 @@ public class ScrapTaxDetail {
         this.totalUseAmount = totalUseAmount;
     }
 
-    public static ScrapTaxDetail create(Scrap scrap, ThirdPartyTaxDetailResponse response) {
+    public static ScrapTaxDetail create(Scrap scrap, GetScrapTaxDetailDto response) {
         return new ScrapTaxDetail(scrap.getId(), Integer.parseInt(response.getTotalUseAmount()));
     }
 }

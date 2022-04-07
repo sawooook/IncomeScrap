@@ -20,13 +20,7 @@ public class JwtTokenProvider {
 
 
     public String getTokenByHeader(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-
-        if (token == null) {
-            throw new IllegalArgumentException("토큰을 찾을 수 없습니다");
-        }
-
-        return token;
+        return request.getHeader("Authorization");
     }
 
     public String getReplaceToken(String token) {
@@ -36,31 +30,34 @@ public class JwtTokenProvider {
     public boolean isValidToken(String token) {
         try {
             if (!token.startsWith("Bearer")) {
+
+                System.out.println("------------------1");
+
                 return false;
             }
             String replaceToken = getReplaceToken(token);
 
-            if (isValidExpiredAt(replaceToken, LocalDateTime.now())) {
+            if (!isValidExpiredAt(replaceToken, LocalDateTime.now())) {
+                System.out.println("------------------2");
                 return false;
             }
         } catch (Exception e) {
+            System.out.println("------------------3");
             return false;
         }
+        System.out.println("------------------4");
 
         return true;
     }
 
     private boolean isValidExpiredAt(String token, LocalDateTime now) {
-        Jws<Claims> jwtToken = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
+        Jws<Claims> jwtToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         LocalDateTime expiredDate =
                 jwtToken.getBody().getExpiration().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
         return expiredDate.isAfter(now);
     }
 
-    public String getUniqueUserId(String token) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
-    }
 
     public String generateToken(String userUniqueId, LocalDateTime today) {
         try {
@@ -70,6 +67,7 @@ public class JwtTokenProvider {
                     .setIssuedAt(Date.from(today.atZone(ZoneId.systemDefault()).toInstant()))
                     .signWith(SignatureAlgorithm.HS256, secretKey)
                     .setExpiration(Date.from(today.plusDays(1).atZone(ZoneId.systemDefault()).toInstant())).compact();
+
         } catch (Exception e) {
             throw new IllegalArgumentException("토큰 생성 오류");
         }

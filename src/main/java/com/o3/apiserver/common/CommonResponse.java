@@ -1,19 +1,18 @@
 package com.o3.apiserver.common;
 
-import com.o3.apiserver.controller.user.response.MyInfoUserResponse;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@Getter
+@RequiredArgsConstructor
 public class CommonResponse<T> {
     private final T data;
     private final String error;
 
-    public CommonResponse(T data, String error) {
-        this.data = data;
-        this.error = error;
-    }
 
 
-    public static <T> CommonResponse<MyInfoUserResponse> convert(T data) {
-        return new CommonResponse<>(data, null);
+    public static <T> CommonResponse<T> convert(T data) {
+        return new CommonResponse<T>(data, null);
     }
 
 

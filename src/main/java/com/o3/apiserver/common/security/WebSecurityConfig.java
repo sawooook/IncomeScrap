@@ -20,18 +20,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
     private final CustomAuthenticationProvider customAuthenticationProvider;
 
-
     @Override
-
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        http.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests()
-                .antMatchers("/szs/login", "/szs/signup").permitAll()
+                .authorizeRequests()
+                .antMatchers("/szs/signup","/szs/login")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .authenticationEntryPoint(authenticationExceptionHandler)
+                .httpBasic().authenticationEntryPoint(authenticationExceptionHandler)
                 .and()
                 .addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(authenticationExceptionHandler);

@@ -1,20 +1,23 @@
 package com.o3.apiserver.domain.scrap;
 
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyPayDetailResponse;
+import com.o3.apiserver.application.scrap.dto.GetScrapPayDetailDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "scrap")
+@Table(name = "scrap_pay_detail")
 @NoArgsConstructor
 @Getter
 public class ScrapPayDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "scrap_id")
     private long scrapId;
 
     @Column(name = "type")
@@ -49,7 +52,7 @@ public class ScrapPayDetail {
         this.companyRegisterNumber = companyRegisterNumber;
     }
 
-    public static ScrapPayDetail create(Scrap scrap, ThirdPartyPayDetailResponse payDetail) {
+    public static ScrapPayDetail create(Scrap scrap, GetScrapPayDetailDto payDetail) {
         return new ScrapPayDetail(
                 scrap.getId(), payDetail.getIncomeHistoryType(), Integer.parseInt(payDetail.getTotalGiveAmount()),
                 payDetail.getCompanyName(), payDetail.getGiveAmountAt(),
