@@ -7,19 +7,19 @@ import lombok.Getter;
 
 @Getter
 public class SignUpUserRequest {
-    public String userId;
+    public String userUniqueId;
     public String password;
     public String name;
     public String regNo;
 
     public SignUpUserRequest(String userId, String password, String name, String regNo) {
-        this.userId = userId;
+        this.userUniqueId = userId;
         this.password = password;
         this.name = name;
         this.regNo = regNo;
     }
 
     public SignUpUserDto convertDto() {
-        return new SignUpUserDto(Long.parseLong(this.userId), this.password, this.name, this.regNo);
+        return new SignUpUserDto(this.userUniqueId, this.password, this.name, this.regNo);
     }
 }

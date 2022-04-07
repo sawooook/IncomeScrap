@@ -29,7 +29,7 @@ public class ScrapController {
     }
 
     @PostMapping("/refund")
-    public ResponseEntity<CommonResponse<MyInfoUserResponse>> getCalculateRefund(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
+    public ResponseEntity<CommonResponse<GetTotalRefundResponse>> getCalculateRefund(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
         GetTotalRefundDto result = calculateRefundScrapService.getByUserUniqueId(loginAuthUserDto);
 
         return ResponseEntity.ok().body(

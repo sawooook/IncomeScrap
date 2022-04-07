@@ -1,5 +1,11 @@
 package com.o3.apiserver.application.user.dto.enums;
 
+import com.o3.apiserver.application.user.dto.SignUpUserDto;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum PermitUserType {
 
 
@@ -15,18 +21,14 @@ public enum PermitUserType {
     private final String registerNumber;
 
 
-    PermitUserType(String userUniqueId, String name, String registerNumber) {
-        this.userUniqueId = userUniqueId;
-        this.name = name;
-        this.registerNumber = registerNumber;
+    public boolean isPermit(SignUpUserDto signUpUserDto) {
+        if (userUniqueId.equals(signUpUserDto.getUserUniqueId())
+                && name.equals(signUpUserDto.getName())
+                && registerNumber.equals(signUpUserDto.getRegNo())
+        ) {
+            return true;
+        }
+
+        return false;
     }
-//
-//    public boolean isPermitUser(SignUpUserDto signUpUserDto, PermitUserType type) {
-//        if (type.name.equals(signUpUserDto.getName())
-//                && (type.userUniqueId.equals(signUpUserDto.getUserId())
-//                && (type.registerNumber.equals(signUpUserDto.getRegNo())))
-//        ) {
-//
-//        }
-//    }
 }

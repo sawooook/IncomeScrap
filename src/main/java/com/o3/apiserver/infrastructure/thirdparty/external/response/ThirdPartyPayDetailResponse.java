@@ -1,6 +1,7 @@
 package com.o3.apiserver.infrastructure.thirdparty.external.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.o3.apiserver.application.scrap.dto.GetScrapPayDetailDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -38,4 +39,12 @@ public class ThirdPartyPayDetailResponse {
 
     @JsonProperty("사업자등록번호")
     private final String companyRegisterNumber;
+
+    public GetScrapPayDetailDto convertDto() {
+        return new GetScrapPayDetailDto(
+                incomeHistoryType, totalGiveAmount, workStartedAt,
+                companyName, name, giveAmountAt,
+                wordEndAt, registerNumber, incomePayType, companyRegisterNumber
+        );
+    }
 }

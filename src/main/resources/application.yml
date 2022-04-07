@@ -1,8 +1,19 @@
 server:
-  port: 50001
+  port: 5001
   error:
     whitelabel:
       enabled: false
+
+spring:
+  datasource:
+    url: jdbc:h2:tcp:localhost/~/szs
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 
 jwt:

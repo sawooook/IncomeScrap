@@ -1,7 +1,7 @@
 package com.o3.apiserver.domain.scrap;
 
 
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyTaxDetailResponse;
+import com.o3.apiserver.application.scrap.dto.GetScrapTaxDetailDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +15,7 @@ public class ScrapTaxDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long scrapId;
+    private Long scrapId  = null;
 
     @Column(name = "total_use_amount")
     private int totalUseAmount;
@@ -25,7 +25,7 @@ public class ScrapTaxDetail {
         this.totalUseAmount = totalUseAmount;
     }
 
-    public static ScrapTaxDetail create(Scrap scrap, ThirdPartyTaxDetailResponse response) {
-        return new ScrapTaxDetail(scrap.getId(), Integer.parseInt(response.getTotalUseAmount()));
+    public static ScrapTaxDetail create(Scrap scrap, GetScrapTaxDetailDto taxDetailDto) {
+        return new ScrapTaxDetail(scrap.getId(), Integer.parseInt(taxDetailDto.getTotalUseAmount()));
     }
 }

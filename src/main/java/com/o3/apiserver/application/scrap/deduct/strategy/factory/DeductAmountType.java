@@ -1,15 +1,15 @@
 package com.o3.apiserver.application.scrap.deduct.strategy.factory;
 
-import com.o3.apiserver.common.util.TaxStandardUtil;
+import static com.o3.apiserver.common.util.TaxConstantUtil.근로소득_세엑공제_기준금액;
 
 public enum DeductAmountType {
-    MIN, MAX;
+    CONDITION_A, CONDITION_B;
 
     public static DeductAmountType convertByUseAmount(int totalUseAmount) {
-        if (totalUseAmount <= TaxStandardUtil.deductStandardAmount) {
-            return MIN;
+        if (totalUseAmount <= 근로소득_세엑공제_기준금액) {
+            return CONDITION_A;
         } else {
-            return MAX;
+            return CONDITION_B;
         }
     }
 }

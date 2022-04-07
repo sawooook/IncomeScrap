@@ -1,9 +1,10 @@
 package com.o3.apiserver.domain.scrap;
 
+import com.o3.apiserver.application.scrap.dto.GetScrapDto;
 import com.o3.apiserver.domain.user.User;
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -44,10 +45,12 @@ public class Scrap {
     private LocalDateTime workerRequestAt;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-
-    public Scrap(String userUniqueId, String errorMessage, String companyName, String svcCd, String appVersion, String hostName, LocalDateTime workerResponseAt, LocalDateTime workerRequestAt) {
+    public Scrap(String userUniqueId, String errorMessage, String companyName,
+                 String svcCd, String appVersion, String hostName,
+                 LocalDateTime workerResponseAt, LocalDateTime workerRequestAt
+    ) {
         this.userUniqueId = userUniqueId;
         this.errorMessage = errorMessage;
         this.companyName = companyName;
@@ -56,16 +59,14 @@ public class Scrap {
         this.hostName = hostName;
         this.workerResponseAt = workerResponseAt;
         this.workerRequestAt = workerRequestAt;
-        this.createdAt = LocalDateTime.now();
     }
 
-
-    public static Scrap create(ThirdPartyResponse response, User user) {
+    public static Scrap create(GetScrapDto response, User user) {
         return new Scrap(
                 user.getUserUniqueId(),
-                response.getResponse().getErrorMessage(),
-                response.getResponse().getCompany(),
-                response.getResponse().getScvCd(),
+                response.getResultResponse().getErrorMessage(),
+                response.getResultResponse().getCompany(),
+                response.getResultResponse().getSvcCd(),
                 response.getAppVersion(),
                 response.getHostName(),
                 response.getWorkerResponseDateTime(),

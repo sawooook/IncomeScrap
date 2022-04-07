@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 @Configuration
 public class ThirdPartyRetrofitConfig {
 
-    @Value("${external.url}")
+    @Value("${external.thirdPartyUrl}")
     private String thirdPartyUrl;
 
     @Bean

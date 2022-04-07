@@ -10,14 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 @Getter
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private Long id = null;
 
     @Column(name = "user_unique_id")
     private String userUniqueId; // 고유 유저아이디 값
@@ -31,9 +32,6 @@ public class User {
     @Column(name = "register_number")
     private String registerNumber; // 주민번호
 
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Scrap> scrapList = new ArrayList<>();
 
     public User(String userUniqueId, String password, String name, String registerNumber) {
         this.userUniqueId = userUniqueId;

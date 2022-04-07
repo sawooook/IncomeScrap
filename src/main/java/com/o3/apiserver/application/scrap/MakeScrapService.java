@@ -1,5 +1,8 @@
 package com.o3.apiserver.application.scrap;
 
+import com.o3.apiserver.application.scrap.dto.GetScrapDto;
+import com.o3.apiserver.application.scrap.dto.GetScrapPayDetailDto;
+import com.o3.apiserver.application.scrap.dto.GetScrapTaxDetailDto;
 import com.o3.apiserver.application.scrap.port.ScrapDrivenPort;
 import com.o3.apiserver.application.scrap.port.ScrapPayDetailDrivenPort;
 import com.o3.apiserver.application.scrap.port.ScrapTaxDetailDrivenPort;
@@ -9,7 +12,6 @@ import com.o3.apiserver.domain.scrap.ScrapPayDetail;
 import com.o3.apiserver.domain.scrap.ScrapTaxDetail;
 import com.o3.apiserver.domain.user.User;
 import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyPayDetailResponse;
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyResponse;
 import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyTaxDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,17 +28,16 @@ public class MakeScrapService {
     private final ScrapPayDetailDrivenPort scrapPayDetailDrivenPort;
 
 
-    public void make(ThirdPartyResponse response) {
-        User user = userDrivenPort.findByUserUniqueId(response.getResponse().getUserId());
-        Scrap makeScrap = scrapDrivenPort.save(Scrap.create(response, user));
+    public void make(GetScrapDto scrapDto) {
+        User user = userDrivenPort.findByUserUniqueId(scrapDto.getResultResponse().getUserUniqueId());
+        Scrap makeScrap = scrapDrivenPort.save(Scrap.create(scrapDto, user));
 
-
-        for (ThirdPartyTaxDetailResponse taxDetail : response.getResponse().getTaxDetailResponse()) {
+        for (GetScrapTaxDetailDto taxDetail : scrapDto.getResultResponse().getTaxDetailResponse()) {
             ScrapTaxDetail scrapTaxDetail = ScrapTaxDetail.create(makeScrap, taxDetail);
             scrapTaxDetailDrivenPort.save(scrapTaxDetail);
         }
 
-        for (ThirdPartyPayDetailResponse payDetail : response.getResponse().getPayDetailResponse()) {
+        for (GetScrapPayDetailDto payDetail : scrapDto.getResultResponse().getPayDetailResponse()) {
             ScrapPayDetail scrapPayDetail = ScrapPayDetail.create(makeScrap, payDetail);
             scrapPayDetailDrivenPort.save(scrapPayDetail);
         }

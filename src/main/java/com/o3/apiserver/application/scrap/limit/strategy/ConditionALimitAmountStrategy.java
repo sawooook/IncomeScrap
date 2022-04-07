@@ -2,27 +2,25 @@ package com.o3.apiserver.application.scrap.limit.strategy;
 
 import com.o3.apiserver.application.scrap.limit.strategy.factory.LimitAmountStrategy;
 import com.o3.apiserver.application.scrap.limit.strategy.factory.LimitAmountType;
-import com.o3.apiserver.common.util.TaxExpressionUtil;
+import com.o3.apiserver.common.util.TaxConstantUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.o3.apiserver.common.util.TaxStandardUtil.*;
-
 @Service
 @Transactional
-public class MiddleLimitAmountStrategy implements LimitAmountStrategy {
+public class ConditionALimitAmountStrategy implements LimitAmountStrategy {
+
+    /**
+     * 7000만원 초과 상품의 경우
+     * */
 
     @Override
     public int process(int salaryAmount) {
-        int result = (int) TaxExpressionUtil.getLimitAmount(
-                limitAmountMinRefundStandard, salaryAmount, limitAmountMinSalaryStandard, limitAmountMinStandardNumber
-        );
-
-        return Math.max(result, limitAmountMaxRefundStandard);
+        return TaxConstantUtil.근로소득_소액공제_최소공제금액;
     }
 
     @Override
     public LimitAmountType type() {
-        return LimitAmountType.MIDDLE;
+        return LimitAmountType.CONDITION_A;
     }
 }

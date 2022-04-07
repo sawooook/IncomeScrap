@@ -26,26 +26,19 @@ public class UserController {
     private final SignUpUserService signUpUserService;
 
     @PostMapping("/signup")
-    public ResponseEntity<CommonResponse<?>> signUp(
-            @RequestBody SignUpUserRequest request
-    ) {
+    public ResponseEntity<CommonResponse<?>> signUp(@RequestBody SignUpUserRequest request) {
         signUpUserService.get(request.convertDto());
         return ResponseEntity.ok().body(CommonResponse.success());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse<MyInfoUserResponse>> login(
-            @RequestBody LoginUserRequest request
-    ) {
+    public ResponseEntity<CommonResponse<LoginUserResponse>> login(@RequestBody LoginUserRequest request) {
         String token = loginUserService.login(request.convertDto());
-
         return ResponseEntity.ok().body(CommonResponse.convert(new LoginUserResponse(token)));
     }
 
     @PostMapping("/me")
-    public ResponseEntity<CommonResponse<MyInfoUserResponse>> login(
-            @AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto
-    ) {
+    public ResponseEntity<CommonResponse<MyInfoUserResponse>> login(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
         return ResponseEntity.ok().body(CommonResponse.convert(MyInfoUserResponse.convert(loginAuthUserDto)));
     }
 }

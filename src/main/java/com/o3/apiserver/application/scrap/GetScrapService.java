@@ -13,10 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetScrapService {
     private final ThirdPartyDrivenPort thirdPartyDrivenPort;
 
-
     public void getScrap(LoginAuthUserDto loginAuthUserDto) {
-        thirdPartyDrivenPort.getScrap(
-                new GetThirdPartyScrapDto(loginAuthUserDto.getName(), loginAuthUserDto.getRegisterNumber())
-        );
+        thirdPartyDrivenPort.getScrap(GetThirdPartyScrapDto.convert(loginAuthUserDto));
     }
 }

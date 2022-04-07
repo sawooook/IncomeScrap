@@ -1,6 +1,6 @@
 package com.o3.apiserver.domain.scrap;
 
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyPayDetailResponse;
+import com.o3.apiserver.application.scrap.dto.GetScrapPayDetailDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +15,7 @@ public class ScrapPayDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long scrapId;
+    private Long scrapId = null;
 
     @Column(name = "type")
     private String type;
@@ -49,7 +49,7 @@ public class ScrapPayDetail {
         this.companyRegisterNumber = companyRegisterNumber;
     }
 
-    public static ScrapPayDetail create(Scrap scrap, ThirdPartyPayDetailResponse payDetail) {
+    public static ScrapPayDetail create(Scrap scrap, GetScrapPayDetailDto payDetail) {
         return new ScrapPayDetail(
                 scrap.getId(), payDetail.getIncomeHistoryType(), Integer.parseInt(payDetail.getTotalGiveAmount()),
                 payDetail.getCompanyName(), payDetail.getGiveAmountAt(),

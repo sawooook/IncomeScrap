@@ -2,26 +2,25 @@ package com.o3.apiserver.application.scrap.deduct.strategy;
 
 import com.o3.apiserver.application.scrap.deduct.strategy.factory.DeductAmountStrategy;
 import com.o3.apiserver.application.scrap.deduct.strategy.factory.DeductAmountType;
-import com.o3.apiserver.common.util.TaxStandardUtil;
+import com.o3.apiserver.common.util.TaxConstantUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.o3.apiserver.common.util.TaxStandardUtil.deductAmountMaxStandardNumber;
-
 @Service
 @Transactional
-public class MaxDeductAmountStrategy implements DeductAmountStrategy {
+public class ConditionADeductAmountStrategy implements DeductAmountStrategy {
+
+    /**
+     * 130만원 이상
+     */
 
     @Override
     public int process(int totalUseAmount) {
-        int excessAmount = totalUseAmount - TaxStandardUtil.deductStandardAmount;
-        double calcAmount = excessAmount * deductAmountMaxStandardNumber;
-
-        return (int) (TaxStandardUtil.deductAdditionalAmount + calcAmount);
+        return (int) (totalUseAmount * TaxConstantUtil.근로소득_세액공제_최소퍼센트);
     }
 
     @Override
     public DeductAmountType type() {
-        return DeductAmountType.MAX;
+        return DeductAmountType.CONDITION_A;
     }
 }

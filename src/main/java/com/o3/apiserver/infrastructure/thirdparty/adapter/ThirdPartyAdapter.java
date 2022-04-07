@@ -23,17 +23,18 @@ public class ThirdPartyAdapter implements ThirdPartyDrivenPort {
     @Override
     public void getScrap(GetThirdPartyScrapDto scrapDto) {
         Call<ThirdPartyResponse> response =
-                thirdPartyApiPort.getScrap(new GetThirdPartyScrapRequest(scrapDto.getName(), scrapDto.getRegisterNumber()));
+                thirdPartyApiPort.getScrap(GetThirdPartyScrapRequest.convert(scrapDto));
 
         response.enqueue(callback());
     }
 
     private Callback<ThirdPartyResponse> callback() {
         return new Callback<ThirdPartyResponse>() {
+
             @Override
             public void onResponse(Call<ThirdPartyResponse> call, Response<ThirdPartyResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    makeScrapService.make(response.body());
+                    makeScrapService.make(response.body().convertDto());
                 }
             }
 

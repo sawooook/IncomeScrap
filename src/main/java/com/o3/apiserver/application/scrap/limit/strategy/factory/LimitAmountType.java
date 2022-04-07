@@ -1,15 +1,15 @@
 package com.o3.apiserver.application.scrap.limit.strategy.factory;
 
 public enum LimitAmountType {
-    MIN, MIDDLE, MAX;
+    CONDITION_A, CONDITION_B, CONDITION_C;
 
     public static LimitAmountType convertByAmount(int totalGiveAmount) {
         if (totalGiveAmount <= 33_000_000) {
-            return MIN;
+            return CONDITION_A;
         } else if (totalGiveAmount <= 70_000_000) {
-            return MIDDLE;
+            return CONDITION_B;
         } else {
-            return MAX;
+            return CONDITION_C;
         }
     }
 }
