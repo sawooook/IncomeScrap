@@ -26,8 +26,6 @@ public class ThirdPartyResponse {
     private final LocalDateTime workerResponseDateTime;
 
     public GetScrapDto convertDto() {
-        return new GetScrapDto(
-                response.convertDto(), appVersion, hostName, workerRequestDateTime, workerRequestDateTime
-        );
+        return new GetScrapDto(response.convertDto(), appVersion, hostName, workerRequestDateTime, workerResponseDateTime);
     }
 }

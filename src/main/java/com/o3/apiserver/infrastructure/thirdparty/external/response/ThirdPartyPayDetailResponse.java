@@ -41,10 +41,7 @@ public class ThirdPartyPayDetailResponse {
     private final String companyRegisterNumber;
 
     public GetScrapPayDetailDto convertDto() {
-        return new GetScrapPayDetailDto(
-                incomeHistoryType, totalGiveAmount, workStartedAt,
-                companyName, name, giveAmountAt,
-                wordEndAt, registerNumber, incomePayType, companyRegisterNumber
-        );
+        return new GetScrapPayDetailDto(incomeHistoryType, totalGiveAmount, workStartedAt,
+                companyName, name, giveAmountAt, wordEndAt, registerNumber, incomePayType, companyRegisterNumber);
     }
 }

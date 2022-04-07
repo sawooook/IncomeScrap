@@ -6,14 +6,15 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:tcp:localhost/~/szs
+    url: jdbc:h2:tcp://localhost/~/szs
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
-    hibernate:
-      ddl-auto: update
     show-sql: true
+    hibernate:
+      ddl-auto: none
+
 
 
 jwt:
@@ -21,3 +22,4 @@ jwt:
 
 external:
   thirdPartyUrl: https://codetest.3o3.co.kr
+

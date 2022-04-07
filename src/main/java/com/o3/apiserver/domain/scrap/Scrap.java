@@ -20,9 +20,6 @@ public class Scrap {
     @Column(name = "id")
     private Long id = null;
 
-    @Column(name = "user_id")
-    private String userUniqueId;
-
     @Column(name = "error_message")
     private String errorMessage;
 
@@ -43,6 +40,10 @@ public class Scrap {
 
     @Column(name = "worker_request_at")
     private LocalDateTime workerRequestAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_unique_id")
+    private User user;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();

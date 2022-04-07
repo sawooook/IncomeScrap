@@ -4,18 +4,21 @@ import com.o3.apiserver.application.scrap.dto.GetScrapPayDetailDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "scrap")
+@Table(name = "scrap_pay_detail")
 @NoArgsConstructor
 @Getter
 public class ScrapPayDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long scrapId = null;
+    @Column(name = "scrap_id")
+    private long scrapId;
 
     @Column(name = "type")
     private String type;

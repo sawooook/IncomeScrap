@@ -6,7 +6,6 @@ import com.o3.apiserver.application.scrap.dto.GetTotalRefundDto;
 import com.o3.apiserver.common.CommonResponse;
 import com.o3.apiserver.common.dto.LoginAuthUserDto;
 import com.o3.apiserver.controller.scrap.response.GetTotalRefundResponse;
-import com.o3.apiserver.controller.user.response.MyInfoUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,9 +30,6 @@ public class ScrapController {
     @PostMapping("/refund")
     public ResponseEntity<CommonResponse<GetTotalRefundResponse>> getCalculateRefund(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
         GetTotalRefundDto result = calculateRefundScrapService.getByUserUniqueId(loginAuthUserDto);
-
-        return ResponseEntity.ok().body(
-                CommonResponse.convert(GetTotalRefundResponse.convert(result))
-        );
+        return ResponseEntity.ok().body(CommonResponse.convert(GetTotalRefundResponse.convert(result)));
     }
 }

@@ -4,6 +4,7 @@ import com.o3.apiserver.application.user.dto.SignUpUserDto;
 import com.o3.apiserver.application.user.port.UserDrivenPort;
 import com.o3.apiserver.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ public class SignUpUserService {
 
     private final UserDrivenPort userDrivenPort;
     private final CheckValidUserService checkValidUserService;
+    private final PasswordEncoder passwordEncoder;
 
 
     public void get(SignUpUserDto signUpUserDto) {
@@ -24,6 +26,8 @@ public class SignUpUserService {
         userDrivenPort.isAlreadyRegister(signUpUserDto.getUserUniqueId());
 
         // 회원가입
-        userDrivenPort.save(User.create(signUpUserDto));
+        userDrivenPort.save(
+                User.create(signUpUserDto, passwordEncoder.encode(signUpUserDto.getPassword()))
+        );
     }
 }

@@ -1,7 +1,6 @@
 package com.o3.apiserver.controller.user.request;
 
 import com.o3.apiserver.application.user.dto.SignUpUserDto;
-import lombok.Data;
 import lombok.Getter;
 
 

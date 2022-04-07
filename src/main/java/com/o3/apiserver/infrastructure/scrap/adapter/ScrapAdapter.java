@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -19,10 +17,5 @@ public class ScrapAdapter implements ScrapDrivenPort {
     @Override
     public Scrap save(Scrap makeScrap) {
         return scrapJpaRepository.save(makeScrap);
-    }
-
-    @Override
-    public List<Scrap> getByUserUniqueId(String userUniqueId) {
-        return scrapJpaRepository.findAllByUserUniqueId(userUniqueId);
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ScrapJpaRepository extends JpaRepository<Scrap, Long> {
-    List<Scrap> findAllByUserUniqueId(String userUniqueID);
+    List<Scrap> findAllByUser(String userUniqueID);
 }

@@ -32,12 +32,14 @@ public class ThirdPartyResultResponse {
     private final String userId;
 
     public GetScrapResultDto convertDto() {
-        List<GetScrapTaxDetailDto> taxDetailDto = taxDetailResponse.stream()
-                .map(ThirdPartyTaxDetailResponse::convertDto).collect(Collectors.toList());
+        List<GetScrapTaxDetailDto> taxDetail = taxDetailResponse.stream()
+                .map(ThirdPartyTaxDetailResponse::convertDto)
+                .collect(Collectors.toList());
 
-        List<GetScrapPayDetailDto> payDetailDto = payDetailResponse.stream()
-                .map(ThirdPartyPayDetailResponse::convertDto).collect(Collectors.toList());
+        List<GetScrapPayDetailDto> payDetail = payDetailResponse.stream()
+                .map(ThirdPartyPayDetailResponse::convertDto)
+                .collect(Collectors.toList());
 
-        return new GetScrapResultDto(taxDetailDto, payDetailDto, errorMessage, company, svcCd, userId);
+        return new GetScrapResultDto(taxDetail, payDetail, errorMessage, company, svcCd, userId);
     }
 }
