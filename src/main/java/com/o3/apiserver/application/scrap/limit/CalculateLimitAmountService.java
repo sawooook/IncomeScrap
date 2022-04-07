@@ -19,8 +19,13 @@ public class CalculateLimitAmountService {
     public int getByScrapId(Long id) {
         ScrapPayDetail scrapPayDetail = scrapPayDetailDrivenPort.findByScrapId(id);
 
+        System.out.println("scrapPayDetail.getScrapId() = " + scrapPayDetail.getTotalGiveAmount());
+
+
         LimitAmountType type =
                 LimitAmountType.convertByAmount(scrapPayDetail.getTotalGiveAmount());
+
+        System.out.println("type = " + type);
 
 
         return limitAmountFactory.get(type)

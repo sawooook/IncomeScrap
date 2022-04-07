@@ -23,6 +23,13 @@ public class JwtTokenProvider {
         return request.getHeader("Authorization");
     }
 
+    public String getUserUniqueId(String token) {
+
+        System.out.println("token = " + token);
+
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
     public String getReplaceToken(String token) {
         return token.replace("Bearer ", "");
     }
@@ -30,23 +37,16 @@ public class JwtTokenProvider {
     public boolean isValidToken(String token) {
         try {
             if (!token.startsWith("Bearer")) {
-
-                System.out.println("------------------1");
-
                 return false;
             }
             String replaceToken = getReplaceToken(token);
 
             if (!isValidExpiredAt(replaceToken, LocalDateTime.now())) {
-                System.out.println("------------------2");
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("------------------3");
             return false;
         }
-        System.out.println("------------------4");
-
         return true;
     }
 

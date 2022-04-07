@@ -9,11 +9,11 @@ import lombok.RequiredArgsConstructor;
 public enum PermitUserType {
 
 
-    REGISTER_A("2", "홍길동", "860824-1655068"),
-    REGISTER_B("3", "김둘리", "860824-1655068"),
-    REGISTER_C("4", "마징가", "860824-1655068"),
-    REGISTER_D("5", "배지터", "860824-1655068"),
-    REGISTER_E("6", "손오공", "860824-1655068");
+    REGISTER_A("1", "홍길동", "860824-1655068"),
+    REGISTER_B("2", "김둘리", "921108-1582816"),
+    REGISTER_C("3", "마징가", "880601-2455116"),
+    REGISTER_D("4", "배지터", "910411-1655068"),
+    REGISTER_E("5", "손오공", "820326-2715702");
 
 
     private final String userUniqueId;

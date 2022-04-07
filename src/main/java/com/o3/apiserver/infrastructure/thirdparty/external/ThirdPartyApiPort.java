@@ -8,7 +8,5 @@ import retrofit2.http.POST;
 
 public interface ThirdPartyApiPort {
     @POST("/scrap/")
-    Call<ThirdPartyResponse> getScrap(
-            @Body GetThirdPartyScrapRequest request
-    );
+    Call<ThirdPartyResponse> getScrap(@Body GetThirdPartyScrapRequest request);
 }

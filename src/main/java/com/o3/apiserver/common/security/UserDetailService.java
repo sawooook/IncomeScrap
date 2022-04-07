@@ -20,6 +20,8 @@ public class UserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userUniqueId) throws UsernameNotFoundException {
         User user = userDrivenPort.findByUserUniqueId(userUniqueId);
+        LoginAuthUserDto loginAuthUserDto = LoginAuthUserDto.create(user);
+//        loginAuthUserDto.getR
         return LoginAuthUserDto.create(user);
     }
 }

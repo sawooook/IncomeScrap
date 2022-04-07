@@ -11,25 +11,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@RequiredArgsConstructor
 public class ThirdPartyResultResponse {
     @JsonProperty("scrap002")
-    private final List<ThirdPartyTaxDetailResponse> taxDetailResponse;
+    private List<ThirdPartyTaxDetailResponse> taxDetailResponse;
 
     @JsonProperty("scrap001")
-    private final List<ThirdPartyPayDetailResponse> payDetailResponse;
+    private List<ThirdPartyPayDetailResponse> payDetailResponse;
 
     @JsonProperty("errMsg")
-    private final String errorMessage;
+    private String errorMessage;
 
     @JsonProperty("company")
-    private final String company;
+    private String company;
 
     @JsonProperty("svcCd")
-    private final String svcCd;
+    private String svcCd;
 
     @JsonProperty("userId")
-    private final String userId;
+    private String userId;
+
+    public ThirdPartyResultResponse() {
+    }
 
     public GetScrapResultDto convertDto() {
         List<GetScrapTaxDetailDto> taxDetail = taxDetailResponse.stream()

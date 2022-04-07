@@ -4,7 +4,6 @@ import com.o3.apiserver.application.scrap.dto.GetScrapDto;
 import com.o3.apiserver.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -46,13 +45,13 @@ public class Scrap {
     private User user;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdΩAt = LocalDateTime.now();
 
-    public Scrap(String userUniqueId, String errorMessage, String companyName,
+    public Scrap(String errorMessage, String companyName,
                  String svcCd, String appVersion, String hostName,
-                 LocalDateTime workerResponseAt, LocalDateTime workerRequestAt
-    ) {
-        this.userUniqueId = userUniqueId;
+                 LocalDateTime workerResponseAt, LocalDateTime workerRequestAt,
+                 User user) {
+        this.user = user;
         this.errorMessage = errorMessage;
         this.companyName = companyName;
         this.svcCd = svcCd;
@@ -64,14 +63,14 @@ public class Scrap {
 
     public static Scrap create(GetScrapDto response, User user) {
         return new Scrap(
-                user.getUserUniqueId(),
                 response.getResultResponse().getErrorMessage(),
                 response.getResultResponse().getCompany(),
                 response.getResultResponse().getSvcCd(),
                 response.getAppVersion(),
                 response.getHostName(),
                 response.getWorkerResponseDateTime(),
-                response.getWorkerRequestDateTime()
+                response.getWorkerRequestDateTime(),
+                user
         );
     }
 }

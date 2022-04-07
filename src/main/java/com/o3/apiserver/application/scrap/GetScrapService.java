@@ -7,13 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class GetScrapService {
     private final ThirdPartyDrivenPort thirdPartyDrivenPort;
 
-    public void getScrap(LoginAuthUserDto loginAuthUserDto) {
+    public void getScrap(LoginAuthUserDto loginAuthUserDto) throws IOException {
         thirdPartyDrivenPort.getScrap(GetThirdPartyScrapDto.convert(loginAuthUserDto));
     }
 }

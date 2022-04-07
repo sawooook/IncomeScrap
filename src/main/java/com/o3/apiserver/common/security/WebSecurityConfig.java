@@ -3,8 +3,6 @@ package com.o3.apiserver.common.security;
 import com.o3.apiserver.common.security.jwt.JwtTokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,31 +16,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationExceptionHandler authenticationExceptionHandler;
     private final JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
-    private final CustomAuthenticationProvider customAuthenticationProvider;
+
+    private static final String[] PERMIT_URL = {"/szs/signup", "/szs/login"};
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+        http
+                .csrf().disable()
+                .cors().disable()
+                .httpBasic().disable()
                 .authorizeRequests()
-                .antMatchers("/szs/signup","/szs/login")
+                .antMatchers(PERMIT_URL)
                 .permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated().and()
+                .exceptionHandling().authenticationEntryPoint(authenticationExceptionHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .httpBasic().authenticationEntryPoint(authenticationExceptionHandler)
                 .and()
-                .addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(authenticationExceptionHandler);
+                .addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(customAuthenticationProvider);
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring()
+//                .antMatchers(
+//                        "/favicon.ico"
+//                        , "/error"
+//                        , "/swagger-ui/**"
+//                        , "/swagger-resources/**"
+//                        , "/v3/api-docs"
+//                );
+//
+//    }
 }

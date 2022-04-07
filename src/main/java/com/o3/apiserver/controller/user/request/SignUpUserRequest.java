@@ -2,23 +2,25 @@ package com.o3.apiserver.controller.user.request;
 
 import com.o3.apiserver.application.user.dto.SignUpUserDto;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 
 @Getter
 public class SignUpUserRequest {
-    public String userUniqueId;
-    public String password;
-    public String name;
-    public String regNo;
+    private final String userId;
+    private final String password;
+    private final String name;
+    private final String regNo;
+
 
     public SignUpUserRequest(String userId, String password, String name, String regNo) {
-        this.userUniqueId = userId;
+        this.userId = userId;
         this.password = password;
         this.name = name;
         this.regNo = regNo;
     }
 
     public SignUpUserDto convertDto() {
-        return new SignUpUserDto(this.userUniqueId, this.password, this.name, this.regNo);
+        return new SignUpUserDto(this.userId, this.password, this.name, this.regNo);
     }
 }

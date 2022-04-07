@@ -2,46 +2,49 @@ package com.o3.apiserver.infrastructure.thirdparty.external.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.o3.apiserver.application.scrap.dto.GetScrapPayDetailDto;
+import com.o3.apiserver.common.util.TimeConvertUtil;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ThirdPartyPayDetailResponse {
     @JsonProperty("소득내역")
-    private final String incomeHistoryType;
+    private String incomeHistoryType;
 
     @JsonProperty("총지급액")
-    private final String totalGiveAmount;
+    private String totalGiveAmount;
 
     @JsonProperty("업무시작일")
-    private final LocalDate workStartedAt;
+    private String workStartedAt;
 
     @JsonProperty("기업명")
-    private final String companyName;
+    private String companyName;
 
     @JsonProperty("이름")
-    private final String name;
+    private String name;
 
     @JsonProperty("지급일")
-    private final LocalDate giveAmountAt;
+    private String giveAmountAt;
 
     @JsonProperty("업무종료일")
-    private final LocalDate wordEndAt;
+    private String wordEndAt;
 
     @JsonProperty("주민등록번호")
-    private final String registerNumber;
+    private String registerNumber;
 
     @JsonProperty("소득구분")
-    private final String incomePayType;
+    private String incomePayType;
 
     @JsonProperty("사업자등록번호")
-    private final String companyRegisterNumber;
+    private String companyRegisterNumber;
 
     public GetScrapPayDetailDto convertDto() {
-        return new GetScrapPayDetailDto(incomeHistoryType, totalGiveAmount, workStartedAt,
-                companyName, name, giveAmountAt, wordEndAt, registerNumber, incomePayType, companyRegisterNumber);
+        return new GetScrapPayDetailDto(incomeHistoryType, totalGiveAmount, TimeConvertUtil.toLocalDate(workStartedAt),
+                companyName, name, TimeConvertUtil.toLocalDate(giveAmountAt), TimeConvertUtil.toLocalDate(wordEndAt),
+                registerNumber, incomePayType, companyRegisterNumber);
     }
 }

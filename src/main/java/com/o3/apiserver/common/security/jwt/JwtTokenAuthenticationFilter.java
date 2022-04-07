@@ -1,6 +1,11 @@
 package com.o3.apiserver.common.security.jwt;
 
+import com.o3.apiserver.common.dto.LoginAuthUserDto;
+import com.o3.apiserver.common.security.UserDetailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,6 +21,7 @@ import java.util.Arrays;
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserDetailService userDetailService;
     private static final String[] PERMIT_URL = {"/szs/signup", "/szs/login"};
 
     @Override
@@ -25,20 +31,17 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         logger.info("[process Request] method : " + request.getMethod() + " URI : " + request.getRequestURI());
-
-        boolean result =
-                Arrays.stream(PERMIT_URL).anyMatch(target -> request.getRequestURI().equals(target));
-
-        if (result) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-
         String token = jwtTokenProvider.getTokenByHeader(request);
 
-        if (!jwtTokenProvider.isValidToken(token)) {
-            return;
+        if (jwtTokenProvider.isValidToken(token)) {
+            String replaceToken = jwtTokenProvider.getReplaceToken(token);
+            String userUniqueId = jwtTokenProvider.getUserUniqueId(replaceToken);
+
+            LoginAuthUserDto loginAuthUserDto = (LoginAuthUserDto) userDetailService.loadUserByUsername(userUniqueId);
+
+            SecurityContextHolder.getContext().setAuthentication(
+                    new UsernamePasswordAuthenticationToken(loginAuthUserDto, "", loginAuthUserDto.getAuthorities())
+            );
         }
 
         filterChain.doFilter(request, response);

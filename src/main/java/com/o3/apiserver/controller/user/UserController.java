@@ -38,7 +38,12 @@ public class UserController {
     }
 
     @PostMapping("/me")
-    public ResponseEntity<CommonResponse<MyInfoUserResponse>> login(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
+    public ResponseEntity<CommonResponse<MyInfoUserResponse>> myPage(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
+
+
+        System.out.println("loginAuthUserDto = " + loginAuthUserDto.getUserUniqueId());
+        System.out.println("------------------");
+
         return ResponseEntity.ok().body(CommonResponse.convert(MyInfoUserResponse.convert(loginAuthUserDto)));
     }
 }

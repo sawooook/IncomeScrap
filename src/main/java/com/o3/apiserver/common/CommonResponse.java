@@ -1,10 +1,13 @@
 package com.o3.apiserver.common;
 
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public class CommonResponse<T> {
+
     private final T data;
     private final String error;
 

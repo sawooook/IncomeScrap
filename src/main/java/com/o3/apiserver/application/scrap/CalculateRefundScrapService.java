@@ -25,15 +25,25 @@ public class CalculateRefundScrapService {
 
 
     public GetTotalRefundDto getByUserUniqueId(LoginAuthUserDto authDto) {
+
+        System.out.println("authDto = " + authDto.getName());
+
         User user = userDrivenPort.findByUserUniqueId(authDto.getUserUniqueId());
         List<Scrap> scrapList = user.getScrapList();
         Scrap targetScrap = scrapList.get(scrapList.size() - 1);
 
+
+        System.out.println("targetScrap = " + targetScrap.toString());
+
         // 한도금액 계산
         int limitAmount = calculateLimitAmountService.getByScrapId(targetScrap.getId());
 
+        System.out.println("limitAmount = " + limitAmount);
+
         // 공제액 계산
         int deductAmount = calculateDeductAmountService.getByScrapId(targetScrap.getId());
+
+        System.out.println("deductAmount = " + deductAmount);
 
         // 최종 환급액
         int resultRefundAmount = TaxExpressionUtil.getRefundAmount(limitAmount, deductAmount);

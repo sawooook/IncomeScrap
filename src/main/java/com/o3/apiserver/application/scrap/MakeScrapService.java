@@ -29,6 +29,10 @@ public class MakeScrapService {
 
 
     public void make(GetScrapDto scrapDto) {
+
+        System.out.println("========================");
+        System.out.println(scrapDto.getResultResponse().getUserUniqueId());
+
         User user = userDrivenPort.findByUserUniqueId(scrapDto.getResultResponse().getUserUniqueId());
         Scrap makeScrap = scrapDrivenPort.save(Scrap.create(scrapDto, user));
 

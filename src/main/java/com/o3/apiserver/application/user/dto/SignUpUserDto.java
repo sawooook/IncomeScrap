@@ -1,13 +1,14 @@
 package com.o3.apiserver.application.user.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@Data
+@Getter
 public class SignUpUserDto {
-    private String userUniqueId;
-    private String password;
-    private String name;
-    private String regNo;
+    private final String userUniqueId;
+    private final String password;
+    private final String name;
+    private final String regNo;
 
     public SignUpUserDto(String userId, String password, String name, String regNo) {
         this.userUniqueId = userId;
@@ -16,3 +17,4 @@ public class SignUpUserDto {
         this.regNo = regNo;
     }
 }
+

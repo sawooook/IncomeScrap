@@ -15,8 +15,7 @@ public class ThirdPartyRetrofitConfig {
 
     @Bean
     public ThirdPartyApiPort thirdPartyClient() {
-        Retrofit retrofit = RetrofitBuilder.create(21, 3)
-                .baseUrl(thirdPartyUrl).build();
+        Retrofit retrofit = RetrofitBuilder.create(21, 3, thirdPartyUrl);
         return retrofit.create(ThirdPartyApiPort.class);
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/szs")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class ScrapController {
     private final CalculateRefundScrapService calculateRefundScrapService;
 
     @PostMapping("/scrap")
-    public ResponseEntity<CommonResponse<?>> getScrap(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
+    public ResponseEntity<CommonResponse<?>> getScrap(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) throws IOException {
         getScrapService.getScrap(loginAuthUserDto);
         return ResponseEntity.ok().body(CommonResponse.success());
     }
@@ -30,6 +32,9 @@ public class ScrapController {
     @PostMapping("/refund")
     public ResponseEntity<CommonResponse<GetTotalRefundResponse>> getCalculateRefund(@AuthenticationPrincipal LoginAuthUserDto loginAuthUserDto) {
         GetTotalRefundDto result = calculateRefundScrapService.getByUserUniqueId(loginAuthUserDto);
+
+        System.out.println("result = " + result.toString());
+
         return ResponseEntity.ok().body(CommonResponse.convert(GetTotalRefundResponse.convert(result)));
     }
 }
