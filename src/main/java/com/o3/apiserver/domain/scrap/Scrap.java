@@ -40,7 +40,7 @@ public class Scrap {
     @Column(name = "worker_request_at")
     private LocalDateTime workerRequestAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_unique_id")
     private User user;
 
@@ -59,6 +59,20 @@ public class Scrap {
         this.hostName = hostName;
         this.workerResponseAt = workerResponseAt;
         this.workerRequestAt = workerRequestAt;
+    }
+
+    public Scrap(Long id, String errorMessage, String companyName, String svcCd,
+                 String appVersion, String hostName, LocalDateTime workerResponseAt,
+                 LocalDateTime workerRequestAt, User user) {
+        this.id = id;
+        this.errorMessage = errorMessage;
+        this.companyName = companyName;
+        this.svcCd = svcCd;
+        this.appVersion = appVersion;
+        this.hostName = hostName;
+        this.workerResponseAt = workerResponseAt;
+        this.workerRequestAt = workerRequestAt;
+        this.user = user;
     }
 
     public static Scrap create(GetScrapDto response, User user) {

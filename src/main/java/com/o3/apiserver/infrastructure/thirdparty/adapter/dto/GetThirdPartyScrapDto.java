@@ -10,7 +10,7 @@ public class GetThirdPartyScrapDto {
     private final String name;
     private final String registerNumber;
 
-    public static GetThirdPartyScrapDto convert(LoginAuthUserDto loginAuthUserDto) {
-        return new GetThirdPartyScrapDto(loginAuthUserDto.getName(), loginAuthUserDto.getRegisterNumber());
+    public static GetThirdPartyScrapDto convert(LoginAuthUserDto loginAuthUserDto, String registerNumber) {
+        return new GetThirdPartyScrapDto(loginAuthUserDto.getName(), registerNumber);
     }
 }

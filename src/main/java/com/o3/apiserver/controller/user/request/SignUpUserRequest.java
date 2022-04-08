@@ -6,19 +6,12 @@ import lombok.RequiredArgsConstructor;
 
 
 @Getter
+@RequiredArgsConstructor
 public class SignUpUserRequest {
     private final String userId;
     private final String password;
     private final String name;
     private final String regNo;
-
-
-    public SignUpUserRequest(String userId, String password, String name, String regNo) {
-        this.userId = userId;
-        this.password = password;
-        this.name = name;
-        this.regNo = regNo;
-    }
 
     public SignUpUserDto convertDto() {
         return new SignUpUserDto(this.userId, this.password, this.name, this.regNo);

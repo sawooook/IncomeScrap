@@ -1,6 +1,8 @@
 package com.o3.apiserver.infrastructure.user.adapter;
 
 import com.o3.apiserver.application.user.port.UserDrivenPort;
+import com.o3.apiserver.common.exception.AlreadyRegisterUserException;
+import com.o3.apiserver.common.exception.NotFoundDataException;
 import com.o3.apiserver.domain.user.User;
 import com.o3.apiserver.infrastructure.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,7 @@ public class UserAdapter implements UserDrivenPort {
     @Override
     public User findByUserUniqueId(String userUniqueId) {
         return userJpaRepository.findByUserUniqueId(userUniqueId).orElseThrow(() -> {
-            throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+            throw new NotFoundDataException();
         });
     }
 
@@ -27,7 +29,7 @@ public class UserAdapter implements UserDrivenPort {
     public void isAlreadyRegister(String userUniqueId) {
         Optional<User> user = userJpaRepository.findByUserUniqueId(userUniqueId);
         if (user.isPresent()) {
-            throw new IllegalArgumentException("이미 등록된 유저입니다.");
+            throw new AlreadyRegisterUserException();
         }
     }
 

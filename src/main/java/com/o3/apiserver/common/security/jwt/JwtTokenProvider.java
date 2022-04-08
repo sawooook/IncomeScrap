@@ -1,5 +1,6 @@
 package com.o3.apiserver.common.security.jwt;
 
+import com.o3.apiserver.common.exception.InValidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -24,9 +25,6 @@ public class JwtTokenProvider {
     }
 
     public String getUserUniqueId(String token) {
-
-        System.out.println("token = " + token);
-
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
@@ -69,7 +67,7 @@ public class JwtTokenProvider {
                     .setExpiration(Date.from(today.plusDays(1).atZone(ZoneId.systemDefault()).toInstant())).compact();
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("토큰 생성 오류");
+            throw new InValidTokenException();
         }
     }
 }

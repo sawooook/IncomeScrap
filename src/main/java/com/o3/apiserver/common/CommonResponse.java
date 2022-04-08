@@ -19,7 +19,7 @@ public class CommonResponse<T> {
         return new CommonResponse<>("OK", null);
     }
 
-    public static CommonResponse<?> error(String code) {
-        return new CommonResponse<> (null, code);
+    public static CommonResponse<?> error(String data) {
+        return new CommonResponse<> (null, data);
     }
 }

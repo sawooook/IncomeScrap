@@ -11,8 +11,6 @@ import com.o3.apiserver.domain.scrap.Scrap;
 import com.o3.apiserver.domain.scrap.ScrapPayDetail;
 import com.o3.apiserver.domain.scrap.ScrapTaxDetail;
 import com.o3.apiserver.domain.user.User;
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyPayDetailResponse;
-import com.o3.apiserver.infrastructure.thirdparty.external.response.ThirdPartyTaxDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,10 +27,6 @@ public class MakeScrapService {
 
 
     public void make(GetScrapDto scrapDto) {
-
-        System.out.println("========================");
-        System.out.println(scrapDto.getResultResponse().getUserUniqueId());
-
         User user = userDrivenPort.findByUserUniqueId(scrapDto.getResultResponse().getUserUniqueId());
         Scrap makeScrap = scrapDrivenPort.save(Scrap.create(scrapDto, user));
 

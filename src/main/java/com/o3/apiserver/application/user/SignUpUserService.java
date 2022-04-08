@@ -2,6 +2,7 @@ package com.o3.apiserver.application.user;
 
 import com.o3.apiserver.application.user.dto.SignUpUserDto;
 import com.o3.apiserver.application.user.port.UserDrivenPort;
+import com.o3.apiserver.common.util.AES256Util;
 import com.o3.apiserver.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +18,6 @@ public class SignUpUserService {
     private final CheckValidUserService checkValidUserService;
     private final PasswordEncoder passwordEncoder;
 
-
     public void get(SignUpUserDto signUpUserDto) {
         // 허용가능한 유저인지 체크
         checkValidUserService.isPermit(signUpUserDto);
@@ -25,9 +25,11 @@ public class SignUpUserService {
         // 중복 체크
         userDrivenPort.isAlreadyRegister(signUpUserDto.getUserUniqueId());
 
-        // 회원가입
         userDrivenPort.save(
-                User.create(signUpUserDto, passwordEncoder.encode(signUpUserDto.getPassword()))
+                User.create(
+                        signUpUserDto,
+                        passwordEncoder.encode(signUpUserDto.getPassword()),
+                        AES256Util.instance.encrypt(signUpUserDto.getRegNo()))
         );
     }
 }

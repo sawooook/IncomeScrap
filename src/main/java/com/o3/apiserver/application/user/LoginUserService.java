@@ -20,7 +20,7 @@ public class LoginUserService {
     private final CheckValidUserService checkValidUserService;
 
 
-    public String login(LoginUserDto loginUserDto) {
+    public String login(LoginUserDto loginUserDto, LocalDateTime now) {
         String uniqueId = loginUserDto.getUserUniqueId().toLowerCase();
         String password = loginUserDto.getPassword().toLowerCase();
 
@@ -29,6 +29,6 @@ public class LoginUserService {
         // 비밀번호 체크
         checkValidUserService.checkPassword(password, findUser.getPassword());
 
-        return jwtTokenProvider.generateToken(findUser.getUserUniqueId(), LocalDateTime.now());
+        return jwtTokenProvider.generateToken(findUser.getUserUniqueId(), now);
     }
 }

@@ -17,7 +17,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationExceptionHandler authenticationExceptionHandler;
     private final JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
 
-    private static final String[] PERMIT_URL = {"/szs/signup", "/szs/login"};
+    private static final String[] PERMIT_URL = {
+            "/szs/signup",
+            "/szs/login",
+
+            // swagger
+            "/v2/api-docs",
+            "**/configuration/ui",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "**/configuration/security",
+            "/swagger-ui.html", "/webjars/**", "/swagger/**"
+    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

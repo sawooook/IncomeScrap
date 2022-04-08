@@ -33,7 +33,7 @@ public class User {
     @Column(name = "register_number")
     private String registerNumber; // 주민번호
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Scrap> scrapList = new ArrayList<>();
 
     public User(String userUniqueId, String password, String name, String registerNumber) {
@@ -43,7 +43,16 @@ public class User {
         this.registerNumber = registerNumber;
     }
 
-    public static User create(SignUpUserDto signUpUserDto, String encodePassword) {
-        return new User(signUpUserDto.getUserUniqueId(), encodePassword, signUpUserDto.getName(), signUpUserDto.getRegNo());
+    public User(Long id, String userUniqueId, String password, String name, String registerNumber, List<Scrap> scrapList) {
+        this.id = id;
+        this.userUniqueId = userUniqueId;
+        this.password = password;
+        this.name = name;
+        this.registerNumber = registerNumber;
+        this.scrapList = scrapList;
+    }
+
+    public static User create(SignUpUserDto signUpUserDto, String encodePassword, String registerNumber) {
+        return new User(signUpUserDto.getUserUniqueId(), encodePassword, signUpUserDto.getName(), registerNumber);
     }
 }

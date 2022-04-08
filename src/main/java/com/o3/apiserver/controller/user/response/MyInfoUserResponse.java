@@ -9,9 +9,8 @@ import lombok.RequiredArgsConstructor;
 public class MyInfoUserResponse {
     private final String userId;
     private final String name;
-    private final String registerNumber;
 
     public static MyInfoUserResponse convert(LoginAuthUserDto loginAuthUserDto) {
-        return new MyInfoUserResponse(loginAuthUserDto.getUserUniqueId(), loginAuthUserDto.getName(), loginAuthUserDto.getRegisterNumber());
+        return new MyInfoUserResponse(loginAuthUserDto.getUserUniqueId(), loginAuthUserDto.getName());
     }
 }

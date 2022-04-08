@@ -5,6 +5,7 @@ import com.o3.apiserver.application.scrap.dto.GetTotalRefundDto;
 import com.o3.apiserver.application.scrap.limit.CalculateLimitAmountService;
 import com.o3.apiserver.application.user.port.UserDrivenPort;
 import com.o3.apiserver.common.dto.LoginAuthUserDto;
+import com.o3.apiserver.common.exception.NotFoundScrapDataException;
 import com.o3.apiserver.common.util.TaxExpressionUtil;
 import com.o3.apiserver.domain.scrap.Scrap;
 import com.o3.apiserver.domain.user.User;
@@ -25,25 +26,20 @@ public class CalculateRefundScrapService {
 
 
     public GetTotalRefundDto getByUserUniqueId(LoginAuthUserDto authDto) {
-
-        System.out.println("authDto = " + authDto.getName());
-
         User user = userDrivenPort.findByUserUniqueId(authDto.getUserUniqueId());
         List<Scrap> scrapList = user.getScrapList();
+
+        if (scrapList.size() == 0) {
+            throw new NotFoundScrapDataException();
+        }
+
         Scrap targetScrap = scrapList.get(scrapList.size() - 1);
-
-
-        System.out.println("targetScrap = " + targetScrap.toString());
 
         // 한도금액 계산
         int limitAmount = calculateLimitAmountService.getByScrapId(targetScrap.getId());
 
-        System.out.println("limitAmount = " + limitAmount);
-
         // 공제액 계산
         int deductAmount = calculateDeductAmountService.getByScrapId(targetScrap.getId());
-
-        System.out.println("deductAmount = " + deductAmount);
 
         // 최종 환급액
         int resultRefundAmount = TaxExpressionUtil.getRefundAmount(limitAmount, deductAmount);

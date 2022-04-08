@@ -1,6 +1,7 @@
 package com.o3.apiserver.infrastructure.scrap.adapter;
 
 import com.o3.apiserver.application.scrap.port.ScrapTaxDetailDrivenPort;
+import com.o3.apiserver.common.exception.NotFoundDataException;
 import com.o3.apiserver.domain.scrap.ScrapTaxDetail;
 import com.o3.apiserver.infrastructure.scrap.repository.ScrapTaxDetailJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class ScrapTaxDetailAdapter implements ScrapTaxDetailDrivenPort {
     @Override
     public ScrapTaxDetail findByScrapId(Long id) {
         return scrapTaxDetailJpaRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalArgumentException("scrap pay detail이 존재하지 않습니다..");
+            throw new NotFoundDataException();
         });
     }
 }

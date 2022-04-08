@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class PasswordConfig {
+public class HashAlgorithmConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
